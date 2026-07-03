@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입 | 네모 광고</title>
+  <link rel="stylesheet" href="styles.css?v=28">
+</head>
+<body class="account-page account-page--signup">
+  <main class="account-shell">
+    <div class="account-card">
+      <a href="index.html" class="account-logo" aria-label="네모 홈">
+        <img src="assets/nemo_logo_logo.png" alt="네모">
+        <span>네모 광고</span>
+      </a>
+
+      <div id="signupFormPanel">
+      <div class="account-header">
+        <h1>회원가입</h1>
+        <p>캠페인을 시작하려면 이메일로 계정을 만들어 주세요.</p>
+      </div>
+
+      <form id="signupForm" class="account-form" novalidate>
+        <div class="account-field">
+          <label for="signupEmail">이메일</label>
+          <input
+            type="email"
+            id="signupEmail"
+            name="email"
+            placeholder="example@company.com"
+            autocomplete="email"
+            required
+          >
+          <p class="account-error" data-error="email"></p>
+        </div>
+
+        <div class="account-field">
+          <label for="signupPassword">비밀번호</label>
+          <div class="account-password-wrap">
+            <input
+              type="password"
+              id="signupPassword"
+              name="password"
+              placeholder="8자 이상 입력"
+              autocomplete="new-password"
+              minlength="8"
+              required
+            >
+            <button type="button" class="account-password-toggle" id="passwordToggle" aria-label="비밀번호 표시">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <path d="M1 1l22 22"/>
+                <path d="M14.12 14.12a3 3 0 0 1-4.24-4.24"/>
+              </svg>
+            </button>
+          </div>
+          <p class="account-error" data-error="password"></p>
+        </div>
+
+        <section class="signup-terms" aria-labelledby="signupTermsTitle">
+          <h2 class="signup-terms-title" id="signupTermsTitle">서비스 이용약관에 동의해주세요</h2>
+
+          <label class="signup-terms-all">
+            <input type="checkbox" id="consentAll" name="consentAll">
+            <span class="signup-terms-all-body">
+              <strong>전체 동의</strong>
+              <span class="signup-terms-all-desc">아래 항목에 모두 동의할게요.</span>
+            </span>
+          </label>
+
+          <div class="signup-terms-divider" aria-hidden="true"></div>
+
+          <div class="signup-terms-list">
+            <div class="consent-item">
+              <input type="checkbox" id="consentMemberTerms" name="consentMemberTerms" value="yes" required>
+              <div class="consent-item-content">
+                <span class="consent-badge consent-badge--required">필수</span>
+                <label class="consent-text" for="consentMemberTerms">네모 애즈 회원 이용약관</label>
+              </div>
+              <a href="#" class="consent-view-link" data-terms-link="memberTerms" target="_blank" rel="noopener noreferrer">보기</a>
+            </div>
+
+            <div class="consent-item">
+              <input type="checkbox" id="consentMemberPrivacy" name="consentMemberPrivacy" value="yes" required>
+              <div class="consent-item-content">
+                <span class="consent-badge consent-badge--required">필수</span>
+                <label class="consent-text" for="consentMemberPrivacy">네모 애즈 회원 개인정보 수집/이용동의</label>
+              </div>
+              <a href="#" class="consent-view-link" data-terms-link="memberPrivacy" target="_blank" rel="noopener noreferrer">보기</a>
+            </div>
+
+            <div class="consent-item">
+              <input type="checkbox" id="consentServiceTerms" name="consentServiceTerms" value="yes" required>
+              <div class="consent-item-content">
+                <span class="consent-badge consent-badge--required">필수</span>
+                <label class="consent-text" for="consentServiceTerms">네모 애즈 서비스 이용약관</label>
+              </div>
+              <a href="#" class="consent-view-link" data-terms-link="serviceTerms" target="_blank" rel="noopener noreferrer">보기</a>
+            </div>
+
+            <div class="consent-item">
+              <input type="checkbox" id="consentServicePrivacy" name="consentServicePrivacy" value="yes" required>
+              <div class="consent-item-content">
+                <span class="consent-badge consent-badge--required">필수</span>
+                <label class="consent-text" for="consentServicePrivacy">네모 애즈 서비스 개인정보 수집/이용동의</label>
+              </div>
+              <a href="#" class="consent-view-link" data-terms-link="servicePrivacy" target="_blank" rel="noopener noreferrer">보기</a>
+            </div>
+          </div>
+
+          <p class="account-error" data-error="terms"></p>
+        </section>
+
+        <button type="submit" class="btn btn-primary btn-full account-submit" id="signupSubmitBtn">
+          <span class="btn-text">가입하기</span>
+          <span class="btn-loading" hidden>처리 중...</span>
+        </button>
+
+        <p class="account-message" id="accountMessage" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="account-links" id="signupFooterLinks">
+        <a href="account.html" id="loginLink">로그인</a>
+      </div>
+      <p class="account-find-help">
+        <a href="https://www.nemoapp.kr" id="findAccountLink" target="_blank" rel="noopener noreferrer">계정을 잃어버렸다면? nemoapp.kr 으로 문의주세요.</a>
+      </p>
+      </div>
+
+      <div class="inquiry-success account-signup-success" id="signupSuccess" hidden tabindex="-1" aria-live="polite">
+        <div class="inquiry-success-icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12.5l2.5 2.5L16 9"/>
+          </svg>
+        </div>
+        <h2 class="inquiry-success-title">가입 완료</h2>
+        <p class="inquiry-success-desc">회원가입이 완료되었습니다.<br>로그인 후 광고주 센터에서 캠페인과 성과를 확인할 수 있어요.</p>
+        <a href="account.html" class="btn btn-primary btn-full account-signup-success-btn" id="advertiserCenterBtn">광고주 센터 바로가기</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="signup.js?v=2"></script>
+</body>
+</html>

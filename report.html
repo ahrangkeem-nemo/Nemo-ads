@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>성과 보고서 — 네모 광고</title>
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body class="manage-page">
+
+  <div class="manage-shell">
+
+    <!-- 사이드바 -->
+    <aside class="manage-sidebar">
+      <a href="account.html" class="manage-logo">
+        <img src="assets/nemo_logo_logo.png" alt="네모" width="28" height="28">
+        <span>네모 애즈 (광고주 센터)</span>
+      </a>
+      <nav class="manage-nav">
+        <a href="ad-accounts.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          광고주 계정 관리
+        </a>
+        <a href="booking-manage.html" class="manage-nav-item manage-nav-item--sub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          계약 진행
+        </a>
+        <a href="contract-manage.html" class="manage-nav-item manage-nav-item--sub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          광고 제안서 자료실
+        </a>
+        <a href="campaign-manage.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          </svg>
+          캠페인 관리
+        </a>
+        <a href="settlement-manage.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          정산 관리
+        </a>
+        <a href="report.html" class="manage-nav-item is-active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          성과 보고서
+        </a>
+        <a href="advertiser-resources.html" class="manage-nav-item manage-nav-item--advertiser-only">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          광고 자료
+        </a>
+      </nav>
+    </aside>
+
+    <!-- 메인 -->
+    <main class="manage-main">
+
+      <!-- 상단 바 -->
+      <div class="manage-topbar">
+        <div class="manage-topbar-title">
+          <h1>성과 보고서</h1>
+          <p class="manage-topbar-desc">일자별 광고 캠페인 노출·클릭 성과를 확인하세요.</p>
+        </div>
+        <div class="manage-topbar-actions">
+          <button class="btn btn-outline btn--sm" id="exportExcelBtn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            엑셀 다운로드
+          </button>
+        </div>
+      </div>
+
+      <!-- 매니저: 수동 성과 입력 안내 -->
+      <div class="report-manager-bar report-manager-only" id="reportManagerBar">
+        <div class="report-manager-bar__text">
+          <strong>수동 입력 상품</strong>
+          <span>채널톡·앱푸시는 GA/빅쿼리에서 가져올 수 없어 운영 매니저가 직접 등록합니다.</span>
+        </div>
+        <div class="report-manager-bar__actions">
+          <button class="btn btn-outline btn--sm" type="button" id="addAppPushBtn">앱푸시 발송 등록</button>
+        </div>
+      </div>
+
+      <!-- 광고주 센터 · 세금계산서 -->
+      <section class="advertiser-center-panel" id="advertiserTaxPanel" hidden>
+        <div class="advertiser-center-header">
+          <h2 class="advertiser-center-title">정산 · 세금계산서</h2>
+          <p class="advertiser-center-desc">네모에서 발행·등록한 세금계산서를 확인하고 다운로드할 수 있습니다.</p>
+        </div>
+        <div class="manage-table-wrap">
+          <table class="manage-table advertiser-tax-table">
+            <thead>
+              <tr>
+                <th>정산 월</th>
+                <th>요청 금액</th>
+                <th>발행일자</th>
+                <th>세금계산서</th>
+              </tr>
+            </thead>
+            <tbody id="advertiserTaxTbody"></tbody>
+          </table>
+          <div class="manage-empty" id="advertiserTaxEmpty" style="display:none">
+            <p>등록된 세금계산서가 없습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 필터 바 -->
+      <div class="acct-type-tabs report-type-tabs report-manager-only" id="reportTypeTabs" role="tablist">
+        <button type="button" class="acct-type-tab is-active" data-type="" role="tab" aria-selected="true">전체</button>
+        <button type="button" class="acct-type-tab" data-type="agency" role="tab" aria-selected="false">
+          <span class="acct-type-dot acct-type-dot--agency"></span>광고대행사
+        </button>
+        <button type="button" class="acct-type-tab" data-type="partner" role="tab" aria-selected="false">
+          <span class="acct-type-dot acct-type-dot--partner"></span>광고주
+        </button>
+      </div>
+
+      <div class="report-filter-bar">
+        <div class="report-filter-date-range">
+          <span class="report-filter-date-label">조회 기간</span>
+          <input type="date" class="report-date-input" id="reportFilterDateFrom" aria-label="조회 시작일">
+          <span class="report-filter-date-sep">~</span>
+          <input type="date" class="report-date-input" id="reportFilterDateTo" aria-label="조회 종료일">
+        </div>
+        <select class="manage-select" id="reportFilterAccount">
+          <option value="">전체 계정</option>
+        </select>
+        <select class="manage-select" id="reportFilterProduct">
+          <option value="">전체 광고 캠페인</option>
+          <option value="main-popup">메인팝업</option>
+          <option value="main-banner">메인배너</option>
+          <option value="list-feed">리스트피드</option>
+          <option value="channel-talk">채널톡</option>
+          <option value="position-marker">포지션마커</option>
+          <option value="discovery">디스커버리</option>
+          <option value="endpoint">엔드포인트</option>
+          <option value="app-push">앱푸시</option>
+        </select>
+      </div>
+
+      <!-- 요약 카드 -->
+      <div class="report-summary-cards" id="reportSummaryCards"></div>
+
+      <!-- 성과 테이블 -->
+      <div class="manage-table-wrap">
+        <table class="manage-table report-table" id="reportTable">
+          <thead>
+            <tr>
+              <th>광고주</th>
+              <th>광고 캠페인</th>
+              <th>Tracking ID</th>
+              <th class="text-right">단가</th>
+              <th class="text-right">Impression</th>
+              <th class="text-right">Clicks</th>
+              <th class="text-right">CTR (%)</th>
+              <th class="text-right">CPC</th>
+              <th class="text-right">CPM</th>
+              <th class="report-table-col-actions"></th>
+            </tr>
+          </thead>
+          <tbody id="reportTbody"></tbody>
+        </table>
+        <div class="manage-empty" id="reportEmpty" style="display:none">
+          <p>선택한 기간에 등록된 성과 데이터가 없습니다.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- 행 추가/편집 모달 -->
+  <div class="manage-modal-overlay" id="rowModalOverlay" style="display:none">
+    <div class="manage-modal" role="dialog" aria-modal="true" style="width:480px">
+      <div class="manage-modal-header">
+        <h2 id="rowModalTitle">성과 데이터 추가</h2>
+        <button class="manage-modal-close" id="rowModalCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body" style="padding:20px">
+        <form id="rowForm">
+          <p class="report-form-notice" id="rfManualNotice" hidden></p>
+          <div class="report-form-grid">
+            <div class="report-form-field">
+              <label for="rfReportDate">조회 일자</label>
+              <input type="date" id="rfReportDate" required>
+            </div>
+            <div class="report-form-field">
+              <label for="rfAccount">운영 계정</label>
+              <select id="rfAccount" required><option value="">운영 계정 선택</option></select>
+              <p class="report-form-field-hint" id="rfAccountHint">광고주·광고대행사 계정 중 하나를 선택하세요.</p>
+            </div>
+            <div class="report-form-field report-form-field--full">
+              <label for="rfCampaignName">광고 캠페인</label>
+              <input type="text" id="rfCampaignName" placeholder="예: 토스플레이스 채널톡" maxlength="80" required>
+            </div>
+            <div class="report-form-field">
+              <label for="rfProduct">캠페인 유형</label>
+              <select id="rfProduct" required>
+                <option value="">선택</option>
+                <option value="main-popup">메인팝업</option>
+                <option value="main-banner">메인배너</option>
+                <option value="list-feed">리스트피드</option>
+                <option value="channel-talk">채널톡</option>
+                <option value="position-marker">포지션마커</option>
+                <option value="discovery">디스커버리</option>
+                <option value="endpoint">엔드포인트</option>
+                <option value="app-push">앱푸시</option>
+              </select>
+            </div>
+            <div class="report-form-field">
+              <label for="rfUnitPrice">단가 (원)</label>
+              <input type="number" id="rfUnitPrice" placeholder="2500000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div id="rfMetricsSection">
+            <div class="report-form-grid report-form-grid--metrics">
+              <div class="report-form-field">
+                <label for="rfImpression">Impression</label>
+                <input type="number" id="rfImpression" placeholder="26573" min="0">
+              </div>
+              <div class="report-form-field">
+                <label for="rfClicks">Clicks</label>
+                <input type="number" id="rfClicks" placeholder="4" min="0">
+              </div>
+              <div class="report-form-field report-form-field--full">
+                <label>CTR / CPC / CPM</label>
+                <p class="report-form-calc" id="rfCalcPreview">—</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="report-form-static-box" id="rfAppPushSection" hidden>
+            <p class="report-form-static-title">집행 방식</p>
+            <p class="report-form-static">1회 발송 · 노출·클릭 수치 없음</p>
+            <p class="report-form-static-hint">단가만 저장하면 광고주 화면에 「1회 발송」으로 표시됩니다.</p>
+          </div>
+
+          <div class="report-form-grid" id="rfManualMetaSection" hidden>
+            <div class="report-form-field report-form-field--full">
+              <label for="rfSourceNote">입력 출처</label>
+              <input type="text" id="rfSourceNote" placeholder="예: 채널톡 관리자 대시보드, 푸시 발송 캠페인명">
+            </div>
+            <div class="report-form-field">
+              <label for="rfEnteredBy">입력자</label>
+              <input type="text" id="rfEnteredBy" readonly>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="rowModalCancelBtn" type="button">취소</button>
+        <button class="btn btn-primary" id="rowModalSaveBtn" type="button">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 삭제 확인 -->
+  <div class="manage-modal-overlay" id="rowDeleteOverlay" style="display:none">
+    <div class="manage-modal manage-modal--confirm" role="dialog" aria-modal="true">
+      <div class="manage-modal-header">
+        <h2>데이터 삭제</h2>
+        <button class="manage-modal-close" id="rowDeleteCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body" style="padding:20px 24px">
+        <p>이 성과 데이터를 삭제할까요?</p>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="rowDeleteCancelBtn">취소</button>
+        <button class="btn btn-danger" id="rowDeleteConfirmBtn">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="config.js"></script>
+  <script src="auth.js?v=3"></script>
+  <script>requireAuth('any');</script>
+  <script src="settlement-store.js?v=2"></script>
+  <script src="data/live-campaigns.js"></script>
+  <script src="report.js?v=14"></script>
+</body>
+</html>

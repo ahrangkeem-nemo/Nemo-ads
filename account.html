@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 | 네모 광고</title>
+  <link rel="stylesheet" href="styles.css?v=28">
+</head>
+<body class="account-page account-page--login">
+  <main class="account-shell">
+    <div class="account-card">
+      <a href="index.html" class="account-logo" aria-label="네모 홈">
+        <img src="assets/nemo_logo_logo.png" alt="네모">
+        <span>네모 광고</span>
+      </a>
+
+      <div class="account-header">
+        <h1>로그인</h1>
+        <p>이미 만든 계정으로 로그인하고 캠페인을 이어서 만들어 보세요.</p>
+      </div>
+
+      <form id="accountForm" class="account-form" novalidate>
+        <div class="account-field">
+          <label for="accountEmail">이메일</label>
+          <input
+            type="email"
+            id="accountEmail"
+            name="email"
+            placeholder="example@company.com"
+            autocomplete="email"
+            required
+          >
+          <p class="account-error" data-error="email"></p>
+        </div>
+
+        <div class="account-field">
+          <label for="accountPassword">비밀번호</label>
+          <div class="account-password-wrap">
+            <input
+              type="password"
+              id="accountPassword"
+              name="password"
+              placeholder="비밀번호 입력"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="account-password-toggle" id="passwordToggle" aria-label="비밀번호 표시">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                <path d="M1 1l22 22"/>
+                <path d="M14.12 14.12a3 3 0 0 1-4.24-4.24"/>
+              </svg>
+            </button>
+          </div>
+          <p class="account-error" data-error="password"></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full account-submit" id="accountSubmitBtn">
+          <span class="btn-text">로그인</span>
+          <span class="btn-loading" hidden>로그인 중...</span>
+        </button>
+
+        <p class="account-message" id="accountMessage" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="account-links">
+        <a href="signup.html" id="signupLink">회원가입</a>
+      </div>
+      <p class="account-find-help">
+        <a href="https://www.nemoapp.kr" id="findAccountLink" target="_blank" rel="noopener noreferrer">계정을 잃어버렸다면? nemoapp.kr 으로 문의주세요.</a>
+      </p>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="auth.js?v=3"></script>
+  <script src="account.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>광고 자료 — 네모 광고</title>
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body class="manage-page" data-resource-audience="advertiser">
+
+  <div class="manage-shell">
+
+    <aside class="manage-sidebar">
+      <a href="account.html" class="manage-logo">
+        <img src="assets/nemo_logo_logo.png" alt="네모" width="28" height="28">
+        <span>네모 애즈 (광고주 센터)</span>
+      </a>
+      <nav class="manage-nav">
+        <a href="report.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          성과 보고서
+        </a>
+        <a href="advertiser-resources.html" class="manage-nav-item is-active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          광고 자료
+        </a>
+      </nav>
+    </aside>
+
+    <main class="manage-main">
+      <div class="manage-topbar">
+        <div class="manage-topbar-title">
+          <h1>광고 자료</h1>
+          <p class="manage-topbar-desc">캠페인 준비에 필요한 상품 소개서와 소재 제작 가이드를 다운로드하세요.</p>
+        </div>
+      </div>
+
+      <div class="contract-layout contract-layout--single">
+        <section class="contract-board" id="contractBoard">
+          <div id="contractBoardContent">
+            <div class="contract-doc-grid" id="contractDocGrid"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="auth.js?v=3"></script>
+  <script>requireAuth('any');</script>
+  <script src="proposal-resources.js"></script>
+</body>
+</html>

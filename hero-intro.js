@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (prefersReducedMotion) {
     header?.classList.add('intro-ready');
     document.querySelectorAll('.journey-step').forEach((step) => step.classList.add('is-visible'));
-    document.querySelector('.journey-cases')?.classList.add('is-visible');
+    document.querySelector('.journey-summary')?.classList.add('is-visible');
     document.querySelector('.channel-targeting')?.classList.add('is-visible');
   } else {
     requestAnimationFrame(() => {
@@ -34,25 +34,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const journeyCases = document.querySelector('.journey-cases');
+  const journeySummary = document.querySelector('.journey-summary');
 
-  if (journeyCases) {
+  if (journeySummary) {
     if (prefersReducedMotion) {
-      journeyCases.classList.add('is-visible');
+      journeySummary.classList.add('is-visible');
     } else {
-      const caseObserver = new IntersectionObserver(
+      const summaryObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-visible');
-              caseObserver.unobserve(entry.target);
+              summaryObserver.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.2, rootMargin: '0px 0px -80px 0px' }
       );
 
-      caseObserver.observe(journeyCases);
+      summaryObserver.observe(journeySummary);
     }
   }
 
@@ -82,10 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (stickyInquiryLink) {
     stickyInquiryLink.addEventListener('click', (event) => {
-      const loginUrl = stickyInquiryLink.href;
-      if (!loginUrl || loginUrl.endsWith('#')) return;
-
-      event.preventDefault();
+      const targetUrl = stickyInquiryLink.href;
+      if (!targetUrl || targetUrl.endsWith('#')) return;
 
       if (typeof gtag === 'function') {
         gtag('event', 'click_create_campaign', {
@@ -94,7 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      window.open(loginUrl, '_blank', 'noopener,noreferrer');
+      const isExternal = /^https?:\/\//.test(targetUrl) && !targetUrl.includes(window.location.host);
+      if (isExternal) {
+        event.preventDefault();
+        window.open(targetUrl, '_blank', 'noopener,noreferrer');
+      }
     });
   }
 });

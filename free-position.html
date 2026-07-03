@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자유 위치 광고 지면</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: #f2f4f6;
+      color: #191f28;
+    }
+
+    .free-pos {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .free-pos-item {
+      width: 100%;
+      text-align: center;
+    }
+
+    .free-pos-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="free-pos">
+    <div class="free-pos-item">
+      <img src="assets/free-pos-popup-float.png" alt="플로팅 팝업 광고 지면 예시" loading="lazy">
+    </div>
+    <div class="free-pos-item">
+      <img src="assets/free-pos-popup-full.png" alt="풀 팝업 광고 지면 예시" loading="lazy">
+    </div>
+    <div class="free-pos-item">
+      <img src="assets/free-pos-list-ad.png" alt="리스트 광고 지면 예시" loading="lazy">
+    </div>
+  </div>
+</body>
+</html>

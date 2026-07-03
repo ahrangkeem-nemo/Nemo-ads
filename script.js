@@ -4,6 +4,8 @@ const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
 const form = document.getElementById('inquiryForm');
 const submitBtn = document.getElementById('submitBtn');
 const formMessage = document.getElementById('formMessage');
+const inquiryFormPanel = document.getElementById('inquiryFormPanel');
+const inquirySuccess = document.getElementById('inquirySuccess');
 const btnText = submitBtn.querySelector('.btn-text');
 const btnLoading = submitBtn.querySelector('.btn-loading');
 
@@ -51,8 +53,8 @@ function validateForm(formData) {
   if (budget && !/^\d+$/.test(String(budget).replace(/,/g, ''))) {
     showError('budget', '희망 예산은 숫자만 입력해 주세요.');
     isValid = false;
-  } else if (budget && budgetNum < 250) {
-    showError('budget', '집행 최소 금액은 250만원입니다.');
+  } else if (budget && budgetNum < 200) {
+    showError('budget', '집행 최소 금액은 200만원입니다.');
     isValid = false;
   }
 
@@ -81,6 +83,14 @@ function showMessage(text, type) {
   formMessage.className = `form-message ${type}`;
 }
 
+function showInquirySuccess() {
+  inquiryFormPanel.hidden = true;
+  inquirySuccess.hidden = false;
+  inquirySuccess.setAttribute('aria-hidden', 'false');
+  inquirySuccess.focus();
+  document.getElementById('inquiry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function formatBudget(value) {
   const num = String(value).replace(/,/g, '');
   return Number(num).toLocaleString('ko-KR');
@@ -103,23 +113,43 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
-    showMessage('Google Apps Script URL을 script.js에 설정해 주세요.', 'error');
-    return;
-  }
-
   const payload = {
     inquiryType: formData.get('inquiryType'),
     company: formData.get('company').trim(),
     budget: formData.get('budget').replace(/,/g, ''),
     schedule: formData.get('schedule').trim(),
     purpose: (formData.get('purpose') || '').trim(),
+    phoneInquiryTime: (formData.get('phoneInquiryTime') || '').trim(),
     materialCount: formData.get('materialCount') || '',
     contactEmail: (formData.get('contactEmail') || '').trim(),
     consentRequired: formData.get('consentRequired') ? 'Y' : 'N',
     consentMarketingAds: formData.get('consentMarketingAds') ? 'Y' : 'N',
     consentMarketingUse: formData.get('consentMarketingUse') ? 'Y' : 'N',
   };
+
+  if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
+    try {
+      saveInquiryBooking(payload);
+    } catch (err) {
+      console.error('문의 저장 실패:', err);
+      showMessage('저장 중 오류가 발생했습니다. 다시 시도해 주세요.', 'error');
+      return;
+    }
+    form.reset();
+    clearErrors();
+    showMessage('', '');
+    showInquirySuccess();
+    setLoading(false);
+    return;
+  }
+
+  try {
+    saveInquiryBooking(payload);
+  } catch (err) {
+    console.error('문의 저장 실패:', err);
+    showMessage('저장 중 오류가 발생했습니다. 다시 시도해 주세요.', 'error');
+    return;
+  }
 
   setLoading(true);
   showMessage('', '');
@@ -134,7 +164,8 @@ form.addEventListener('submit', async (e) => {
 
     form.reset();
     clearErrors();
-    showMessage('문의가 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.', 'success');
+    showMessage('', '');
+    showInquirySuccess();
   } catch {
     showMessage('제출 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error');
   } finally {

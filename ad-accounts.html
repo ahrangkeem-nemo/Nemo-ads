@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>광고 계정 — 네모 광고</title>
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body class="manage-page">
+
+  <div class="manage-shell">
+
+    <!-- 사이드바 -->
+    <aside class="manage-sidebar">
+      <a href="account.html" class="manage-logo">
+        <img src="assets/nemo_logo_logo.png" alt="네모" width="28" height="28">
+        <span>네모 애즈 (광고주 센터)</span>
+      </a>
+      <nav class="manage-nav">
+        <!-- 1. 광고주 계정 관리 -->
+        <a href="ad-accounts.html" class="manage-nav-item is-active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          광고주 계정 관리
+        </a>
+        <!-- 1.1 계약 진행 (서브) -->
+        <a href="booking-manage.html" class="manage-nav-item manage-nav-item--sub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          계약 진행
+        </a>
+        <!-- 1.2 광고 제안서 자료실 (서브) -->
+        <a href="contract-manage.html" class="manage-nav-item manage-nav-item--sub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          광고 제안서 자료실
+        </a>
+        <!-- 2. 캠페인 관리 -->
+        <a href="campaign-manage.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          </svg>
+          캠페인 관리
+        </a>
+        <!-- 3. 정산 관리 -->
+        <a href="settlement-manage.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          정산 관리
+        </a>
+        <!-- 4. 성과 보고서 -->
+        <a href="report.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          성과 보고서
+        </a>
+      </nav>
+    </aside>
+
+    <!-- 메인 -->
+    <main class="manage-main">
+
+      <!-- ══════════════════════════════
+           1DEPTH : 계정 목록
+           ══════════════════════════════ -->
+      <div id="acctListView">
+
+        <div class="manage-topbar">
+          <div class="manage-topbar-title">
+            <h1>운영 계정</h1>
+            <p class="manage-topbar-desc">부킹 완료 후 캠페인·정산과 연결되는 광고주·대행사 계정입니다.</p>
+          </div>
+          <div class="manage-topbar-actions">
+            <!-- 수수료 지급 알람 벨 -->
+            <div class="notif-bell-wrap" id="feeNotifWrap">
+              <button class="notif-bell-btn" id="feeNotifBtn" aria-label="수수료 지급 알람">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                <span class="notif-badge" id="feeNotifBadge" style="display:none">0</span>
+              </button>
+              <div class="notif-dropdown notif-dropdown--fee" id="feeNotifDropdown" style="display:none">
+                <div class="notif-dropdown-header">
+                  <span class="notif-dropdown-title">수수료 지급 예정</span>
+                  <span class="notif-dropdown-sub">7일 이내</span>
+                </div>
+                <ul class="notif-list" id="feeNotifList"></ul>
+                <div class="notif-empty" id="feeNotifEmpty" style="display:none">
+                  <p>임박한 수수료 지급일이 없습니다.</p>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" id="newAccountBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              새 계정
+            </button>
+          </div>
+        </div>
+
+        <!-- 타입 탭 -->
+        <div class="acct-type-tabs" id="acctTypeTabs">
+          <button class="acct-type-tab is-active" data-type="">전체</button>
+          <button class="acct-type-tab" data-type="agency">
+            <span class="acct-type-dot acct-type-dot--agency"></span>광고대행사
+          </button>
+          <button class="acct-type-tab" data-type="partner">
+            <span class="acct-type-dot acct-type-dot--partner"></span>광고주
+          </button>
+        </div>
+
+        <!-- 툴바 -->
+        <div class="acct-toolbar">
+          <div class="acct-stats" id="acctStats">
+            <span class="acct-stat">전체 <strong id="statAllAcct">0</strong></span>
+            <span class="acct-stat-divider">·</span>
+            <span class="acct-stat acct-stat--agency">광고대행사 <strong id="statAgency">0</strong></span>
+            <span class="acct-stat-divider">·</span>
+            <span class="acct-stat acct-stat--partner">광고주 <strong id="statPartner">0</strong></span>
+          </div>
+          <div class="manage-search-wrap">
+            <svg class="manage-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <input type="search" class="manage-search" id="acctSearchInput" placeholder="계정명·이메일 검색" autocomplete="off">
+          </div>
+        </div>
+
+        <!-- 테이블 -->
+        <div class="manage-table-wrap">
+          <table class="manage-table acct-table" id="acctTable">
+            <thead>
+              <tr>
+                <th>광고주</th>
+                <th>담당자 연락처</th>
+                <th>연결 캠페인</th>
+                <th>상세</th>
+              </tr>
+            </thead>
+            <tbody id="acctTbody"></tbody>
+          </table>
+          <div class="manage-empty" id="acctEmpty" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            <p>등록된 광고 계정이 없습니다.<br>첫 계정을 추가해 보세요.</p>
+            <button class="btn btn-primary" id="emptyNewAcctBtn">+ 새 계정</button>
+          </div>
+        </div>
+      </div><!-- /acctListView -->
+
+
+      <!-- ══════════════════════════════
+           2DEPTH : 계정 상세
+           ══════════════════════════════ -->
+      <div id="acctDetailView" style="display:none">
+
+        <!-- 브레드크럼 -->
+        <div class="acct-breadcrumb">
+          <button class="acct-back-btn" id="backToListBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            목록으로
+          </button>
+        </div>
+
+        <!-- 계정 헤더 -->
+        <div class="acct-detail-header-card" id="detailHeaderCard">
+          <div class="acct-detail-header-top">
+            <div class="acct-detail-title-row">
+              <h1 class="acct-detail-name" id="detailName"></h1>
+              <span class="acct-type-badge" id="detailTypeBadge"></span>
+            </div>
+            <div class="acct-detail-header-actions">
+              <button class="btn btn-outline" id="editAccountBtn">계정 편집</button>
+              <button class="btn manage-btn-delete" id="deleteAccountFromDetailBtn">삭제</button>
+            </div>
+          </div>
+          <p class="acct-detail-email-row" id="detailEmailRow"></p>
+
+          <!-- 요약 수치 -->
+          <div class="acct-detail-stats">
+            <div class="acct-detail-stat">
+              <span class="acct-detail-stat-value" id="detailCampaignTotal">0</span>
+              <span class="acct-detail-stat-label">전체 캠페인</span>
+            </div>
+            <div class="acct-detail-stat">
+              <span class="acct-detail-stat-value acct-detail-stat-value--active" id="detailCampaignActive">0</span>
+              <span class="acct-detail-stat-label">진행중</span>
+            </div>
+            <div class="acct-detail-stat">
+              <span class="acct-detail-stat-value acct-detail-stat-value--scheduled" id="detailCampaignScheduled">0</span>
+              <span class="acct-detail-stat-label">예정</span>
+            </div>
+            <div class="acct-detail-stat">
+              <span class="acct-detail-stat-value acct-detail-stat-value--ended" id="detailCampaignEnded">0</span>
+              <span class="acct-detail-stat-label">종료</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 기본 정보 + 정산 정보 -->
+        <div class="acct-detail-info-grid">
+          <!-- 기본 정보 -->
+          <div class="acct-detail-section">
+            <p class="acct-detail-section-label">기본 정보</p>
+            <h3 class="acct-detail-section-title">계정 상세</h3>
+            <div class="acct-detail-fields" id="detailBasicFields">
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">사업자 주소</span>
+                <span class="acct-detail-field-value" id="detailAddress">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">표준광고계약서</span>
+                <span class="acct-detail-field-value" id="detailContractFile">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">사업자등록증</span>
+                <span class="acct-detail-field-value" id="detailBizFile">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">통장 사본</span>
+                <span class="acct-detail-field-value" id="detailBankFile">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">참고시트</span>
+                <span class="acct-detail-field-value" id="detailSheetUrl">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">등록일</span>
+                <span class="acct-detail-field-value" id="detailCreatedAt">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 정산 정보 -->
+          <div class="acct-detail-section">
+            <p class="acct-detail-section-label">정산</p>
+            <h3 class="acct-detail-section-title">정산 정보</h3>
+            <div class="acct-detail-fields">
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">상계</span>
+                <span class="acct-detail-field-value" id="detailSetoff">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">정산 대상 이메일</span>
+                <span class="acct-detail-field-value" id="detailEmail">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">수수료 지급 예정일</span>
+                <span class="acct-detail-field-value" id="detailFeePaidDate">—</span>
+              </div>
+              <div class="acct-detail-field">
+                <span class="acct-detail-field-label">최근 세금계산서 발행일자</span>
+                <span class="acct-detail-field-value" id="detailTaxDate">—</span>
+              </div>
+              <div class="acct-detail-field acct-detail-field--action">
+                <a class="btn btn-outline btn--sm" href="settlement-manage.html" id="goSettlementBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                  정산 관리에서 보기
+                </a>
+              </div>
+            </div>
+
+            <!-- 광고 대행료 정산 예정 -->
+            <div class="acct-fee-card" id="detailFeeCard" style="display:none">
+              <p class="acct-fee-card-title">광고 대행료 정산 예정</p>
+              <p class="acct-fee-card-label">광고 대행료 · 대행수수료 <span class="acct-fee-vat-note">(VAT 별도)</span></p>
+              <div class="acct-fee-calc">
+                <span class="acct-fee-base">(대행료) <strong id="detailFeeBase">—</strong></span>
+                <span class="acct-fee-plus">+</span>
+                <span class="acct-fee-vat">(VAT 10%) <strong id="detailFeeVat">—</strong></span>
+                <span class="acct-fee-eq">=</span>
+                <span class="acct-fee-total"><strong id="detailFeeTotal">—</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 계약 서류 섹션 -->
+        <div class="acct-campaigns-section" style="margin-top:20px">
+          <div class="acct-campaigns-header">
+            <div>
+              <h2 class="acct-campaigns-title">계약 서류</h2>
+              <span class="acct-campaigns-count" id="detailContractCountBadge">0건</span>
+            </div>
+            <a class="btn btn-outline btn--sm" href="contract-manage.html" id="goContractBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              광고 제안서 자료실
+            </a>
+          </div>
+          <div class="contract-doc-grid" id="detailContractGrid" style="margin-top:14px"></div>
+        </div>
+
+        <!-- 캠페인 섹션 -->
+        <div class="acct-campaigns-section">
+          <div class="acct-campaigns-header">
+            <div>
+              <h2 class="acct-campaigns-title">캠페인</h2>
+              <span class="acct-campaigns-count" id="detailCampaignCountBadge">0개</span>
+            </div>
+            <button class="btn btn-primary btn--sm" id="addCampaignBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              새 캠페인
+            </button>
+          </div>
+
+          <div class="manage-table-wrap">
+            <table class="manage-table">
+              <thead>
+                <tr>
+                  <th>캠페인명</th>
+                  <th>광고 상품</th>
+                  <th>상태</th>
+                  <th>노출 기간</th>
+                  <th>등록일</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="detailCampaignTbody"></tbody>
+            </table>
+            <div class="manage-empty" id="detailCampaignEmpty" style="display:none">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/>
+              </svg>
+              <p>이 계정에 연결된 캠페인이 없습니다.</p>
+              <button class="btn btn-primary" id="detailEmptyCampaignBtn">+ 새 캠페인</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /acctDetailView -->
+
+    </main>
+  </div><!-- /manage-shell -->
+
+
+  <!-- 계정 생성/수정 모달 -->
+  <div class="manage-modal-overlay" id="acctModalOverlay" style="display:none">
+    <div class="manage-modal manage-modal--md" role="dialog" aria-modal="true" aria-labelledby="acctModalTitle">
+      <div class="manage-modal-header">
+        <h2 id="acctModalTitle">새 계정</h2>
+        <button class="manage-modal-close" id="acctModalCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body">
+        <form id="acctForm" novalidate>
+          <input type="hidden" id="acctId">
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="acctName">계정명 <span class="manage-required">*</span></label>
+            <div class="manage-side-field">
+              <input type="text" id="acctName" placeholder="예: 피알원_홍길동" maxlength="60" autocomplete="off">
+              <p class="manage-field-hint">광고회사_담당자 이름 형식으로 입력해 주세요.</p>
+              <p class="manage-field-error" data-error="name"></p>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="acctType">유형 <span class="manage-required">*</span></label>
+            <div class="manage-side-field">
+              <select id="acctType">
+                <option value="agency">광고대행사</option>
+                <option value="partner">광고주</option>
+              </select>
+              <div class="acct-advertiser-subtype-panel" id="acctAdvertiserSubtypePanel" hidden>
+                <p class="manage-field-hint">광고주 세부 유형 <span class="manage-required">*</span></p>
+                <div class="acct-subtype-options" role="group" aria-label="광고주 세부 유형">
+                  <label class="acct-subtype-option">
+                    <input type="checkbox" name="advertiserSubtype" value="regular_partner" checked>
+                    <span>정기 파트너사</span>
+                  </label>
+                  <label class="acct-subtype-option">
+                    <input type="checkbox" name="advertiserSubtype" value="general">
+                    <span>일반 광고주</span>
+                  </label>
+                </div>
+                <p class="manage-field-error" data-error="advertiserSubtype"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label">상계</label>
+            <div class="manage-side-field">
+              <div class="acct-setoff-options" role="radiogroup" aria-label="상계 여부">
+                <label class="acct-setoff-option">
+                  <input type="radio" name="acctSetoff" id="acctSetoffNo" value="no_setoff" checked>
+                  <span>상계 안함</span>
+                </label>
+                <label class="acct-setoff-option">
+                  <input type="radio" name="acctSetoff" id="acctSetoffYes" value="setoff">
+                  <span>상계함</span>
+                </label>
+              </div>
+              <div class="acct-setoff-hints">
+                <p class="acct-setoff-hint" data-setoff-hint="setoff">상계함 (상계 처리): 대행수수료가 발생할 정산 금액에서 미리 차감되어 상쇄되므로, 추후 당사(네모)가 대행사(피알원) 측에 별도로 지불해야 하는 영업대행료가 없습니다.</p>
+                <p class="acct-setoff-hint" data-setoff-hint="no_setoff">상계 안함 (미상계): 수수료를 정산 금액에서 미리 차감하지 않으므로, 추후 광고 집행 후 발생한 영업대행료를 대행사 측에 별도로 직접 지급(송금)해야 합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="acctEmail">정산 대상<br>이메일 <span class="manage-required">*</span></label>
+            <div class="manage-side-field">
+              <input type="email" id="acctEmail" placeholder="billing@company.com" autocomplete="off">
+              <p class="manage-field-error" data-error="email"></p>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="acctAddress">사업자 주소</label>
+            <div class="manage-side-field">
+              <input type="text" id="acctAddress" placeholder="서울특별시 강남구 테헤란로 123" maxlength="100">
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label">세금계산서<br>발행일자</label>
+            <div class="manage-side-field">
+              <div id="acctPartnerSettleCyclePanel" hidden>
+                <div class="acct-setoff-options" role="radiogroup" aria-label="세금계산서 발행 주기">
+                  <label class="acct-setoff-option">
+                    <input type="radio" name="acctSettleCycle" id="acctSettleCycleStart" value="month_start">
+                    <span>매월 초 (1일)</span>
+                  </label>
+                  <label class="acct-setoff-option">
+                    <input type="radio" name="acctSettleCycle" id="acctSettleCycleEnd" value="month_end" checked>
+                    <span>매월 말</span>
+                  </label>
+                </div>
+                <p class="manage-field-hint">정산 관리 발행일자에 반영됩니다.</p>
+              </div>
+              <div id="acctAgencyTaxDatePanel">
+                <input type="date" id="acctTaxDate">
+                <p class="manage-field-hint">매월 세금계산서를 발행할 날짜 (일자만 적용)</p>
+                <p class="manage-field-error" data-error="taxDate"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label">표준광고계약서</label>
+            <div class="manage-side-field">
+              <div class="acct-file-upload" id="acctContractFileZone">
+                <input type="file" id="acctContractFileInput" accept="image/*,.pdf,.doc,.docx" hidden>
+                <div class="acct-file-empty" id="acctContractFileEmpty">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  <span>클릭하거나 파일을 여기에 놓으세요 (PDF, 이미지)</span>
+                </div>
+                <div class="acct-file-attached" id="acctContractFileAttached" style="display:none">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span id="acctContractFileName">파일명.pdf</span>
+                  <button type="button" class="acct-file-remove" id="acctContractFileRemove" aria-label="파일 삭제">×</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label">사업자등록증</label>
+            <div class="manage-side-field">
+              <div class="acct-file-upload" id="acctBizFileZone">
+                <input type="file" id="acctBizFileInput" accept="image/*,.pdf" hidden>
+                <div class="acct-file-empty" id="acctBizFileEmpty">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  <span>클릭하거나 파일을 여기에 놓으세요 (PDF, 이미지)</span>
+                </div>
+                <div class="acct-file-attached" id="acctBizFileAttached" style="display:none">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span id="acctBizFileName">파일명.pdf</span>
+                  <button type="button" class="acct-file-remove" id="acctBizFileRemove" aria-label="파일 삭제">×</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label">통장 사본</label>
+            <div class="manage-side-field">
+              <div class="acct-file-upload" id="acctBankFileZone">
+                <input type="file" id="acctBankFileInput" accept="image/*,.pdf" hidden>
+                <div class="acct-file-empty" id="acctBankFileEmpty">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  <span>클릭하거나 파일을 여기에 놓으세요 (PDF, 이미지)</span>
+                </div>
+                <div class="acct-file-attached" id="acctBankFileAttached" style="display:none">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                  <span id="acctBankFileName">파일명.pdf</span>
+                  <button type="button" class="acct-file-remove" id="acctBankFileRemove" aria-label="파일 삭제">×</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label" id="acctSheetUrlRow">
+            <label class="manage-side-label" for="acctSheetUrl">참고시트 URL</label>
+            <div class="manage-side-field">
+              <input type="url" id="acctSheetUrl" placeholder="https://docs.google.com/...">
+            </div>
+          </div>
+
+          <div id="acctAgencyFeePanel">
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="acctAgencyFee">대행 수수료<br><span class="manage-label-opt">(VAT 별도)</span></label>
+            <div class="manage-side-field">
+              <div class="manage-input-wrap">
+                <input type="number" id="acctAgencyFee" placeholder="50" min="0" step="1">
+                <span class="manage-input-unit">만원</span>
+              </div>
+              <p class="manage-field-hint" id="acctFeePreview" style="display:none"></p>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label" style="border-bottom:none">
+            <label class="manage-side-label" for="acctFeePaidDate">수수료 지급<br>예정일</label>
+            <div class="manage-side-field">
+              <input type="date" id="acctFeePaidDate">
+              <p class="manage-field-hint">광고 종료 후 대행 수수료 입금 예정일</p>
+            </div>
+          </div>
+          </div>
+        </form>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="acctModalCancelBtn">취소</button>
+        <button class="btn btn-primary" id="acctModalSaveBtn">
+          <span class="btn-text">저장</span>
+          <span class="btn-loading" hidden>저장 중...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 캠페인 등록 모달 (계정 상세에서) -->
+  <div class="manage-modal-overlay" id="campaignFromDetailOverlay" style="display:none">
+    <div class="manage-modal manage-modal--md" role="dialog" aria-modal="true" aria-labelledby="cfDetailTitle">
+      <div class="manage-modal-header">
+        <h2 id="cfDetailTitle">새 캠페인</h2>
+        <button class="manage-modal-close" id="cfDetailCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body">
+        <form id="cfDetailForm" novalidate>
+          <input type="hidden" id="cfDetailCampaignId">
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="cfName">캠페인명 <span class="manage-required">*</span></label>
+            <div class="manage-side-field">
+              <input type="text" id="cfName" placeholder="배너 제목" maxlength="60" autocomplete="off">
+              <p class="manage-field-error" data-error="cfName"></p>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="cfProduct">배너 타입 <span class="manage-required">*</span></label>
+            <div class="manage-side-field">
+              <select id="cfProduct">
+                <option value="">선택</option>
+                <option value="main-popup">메인팝업</option>
+                <option value="main-banner">메인배너</option>
+                <option value="list-feed">리스트피드</option>
+                <option value="channel-talk">채널톡</option>
+                <option value="position-marker">포지션마커</option>
+                <option value="discovery">디스커버리</option>
+                <option value="endpoint">엔드포인트</option>
+                <option value="app-push">앱푸시</option>
+              </select>
+              <p class="manage-field-error" data-error="cfProduct"></p>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label" for="cfStatus">상태</label>
+            <div class="manage-side-field">
+              <select id="cfStatus">
+                <option value="scheduled">예정</option>
+                <option value="active">진행중</option>
+                <option value="ended">종료</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label">
+            <label class="manage-side-label">노출 기간</label>
+            <div class="manage-side-field">
+              <div class="manage-date-range">
+                <input type="datetime-local" id="cfStart">
+                <span class="manage-date-tilde">~</span>
+                <input type="datetime-local" id="cfEnd">
+              </div>
+            </div>
+          </div>
+
+          <div class="manage-form-row-label" style="border-bottom:none">
+            <label class="manage-side-label" for="cfDesc">설명<br><span class="manage-label-opt">(선택)</span></label>
+            <div class="manage-side-field">
+              <textarea id="cfDesc" placeholder="캠페인 설명" rows="2" maxlength="200"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="cfDetailCancelBtn">취소</button>
+        <button class="btn btn-primary" id="cfDetailSaveBtn">
+          <span class="btn-text">추가</span>
+          <span class="btn-loading" hidden>저장 중...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 계정 정보 상세 (읽기 전용) -->
+  <div class="manage-modal-overlay" id="acctInfoModalOverlay" style="display:none">
+    <div class="manage-modal manage-modal--md" role="dialog" aria-modal="true" aria-labelledby="acctInfoModalTitle">
+      <div class="manage-modal-header">
+        <h2 id="acctInfoModalTitle">계정 상세</h2>
+        <button class="manage-modal-close" id="acctInfoModalCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body acct-info-modal-body">
+        <dl class="booking-inquiry-dl" id="acctInfoDl"></dl>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="acctInfoModalDismissBtn">닫기</button>
+        <button class="btn btn-primary" id="acctInfoModalEditBtn">편집</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 삭제 확인 모달 -->
+  <div class="manage-modal-overlay" id="acctDeleteOverlay" style="display:none">
+    <div class="manage-modal manage-modal--sm" role="dialog" aria-modal="true" aria-labelledby="acctDeleteTitle">
+      <div class="manage-modal-header">
+        <h2 id="acctDeleteTitle">계정 삭제</h2>
+        <button class="manage-modal-close" id="acctDeleteCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body">
+        <p class="manage-delete-desc">
+          <strong id="acctDeleteName"></strong>
+          계정을 삭제하시겠습니까?<br>
+          <span>연결된 캠페인 정보는 유지됩니다.</span>
+        </p>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="acctDeleteCancelBtn">취소</button>
+        <button class="btn manage-btn-delete" id="acctDeleteConfirmBtn">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수수료 메일 미리보기 모달 -->
+  <div class="manage-modal-overlay" id="feeMailOverlay" style="display:none">
+    <div class="manage-modal manage-modal--mail" role="dialog" aria-modal="true">
+      <div class="manage-modal-header">
+        <h2 id="feeMailTitle">메일 미리보기</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-outline btn--sm" id="feeMailCopyBtn">내용 복사</button>
+          <a class="btn btn-primary btn--sm" id="feeMailtoLink" href="#" target="_blank">메일 열기</a>
+          <button class="manage-modal-close" id="feeMailCloseBtn" aria-label="닫기">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="manage-modal-body mail-preview-body">
+        <div class="mail-preview-meta">
+          <div class="mail-preview-meta-row">
+            <span class="mail-preview-meta-label">받는 사람</span>
+            <span class="mail-preview-meta-value" id="feeMailTo">—</span>
+          </div>
+          <div class="mail-preview-meta-row">
+            <span class="mail-preview-meta-label">제목</span>
+            <span class="mail-preview-meta-value" id="feeMailSubject">—</span>
+          </div>
+        </div>
+        <div class="mail-preview-content" id="feeMailContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="auth.js?v=3"></script>
+  <script>requireAuth('manager');</script>
+  <script src="settlement-store.js?v=2"></script>
+  <script src="data/live-campaigns.js"></script>
+  <script src="ad-accounts.js?v=16"></script>
+</body>
+</html>

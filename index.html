@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>네모 광고 상품</title>
-  <link rel="stylesheet" href="styles.css?v=27">
+  <link rel="stylesheet" href="styles.css?v=46">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3V8CFQBQLF"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -88,33 +88,68 @@
 
       <div class="journey-summary">
         <span class="journey-summary-line" aria-hidden="true"></span>
+        <h2 class="journey-partner-heading reveal-item">파트너사와 함께해요</h2>
 
-        <div class="journey-cases">
-          <div class="journey-showcase-intro reveal-item">
-            <span class="journey-showcase-badge">인테리어</span>
-            <p class="journey-showcase-desc">인테리어 업종 맞춤형 고효율 지면! 높은 이미지 자유도와 극대화된 지면 효율을 직접 확인하세요</p>
-          </div>
+        <p class="journey-showcase-desc reveal-item">고민된다면 광고 상품을 조합해서 맞춤형 상품을 제안해 드려요</p>
 
-          <div class="journey-showcase">
-            <article class="showcase-card showcase-card--popup reveal-item">
-              <div class="showcase-card-visual">
-                <img src="assets/인젠_메인팝업.png" alt="인젠 메인팝업 집행 사례" loading="lazy">
+        <div class="journey-partner-logos reveal-item" aria-label="파트너사 로고">
+          <ul class="journey-partner-logos-list">
+            <li class="journey-partner-logo">
+              <img src="assets/partner-zigbang.png" alt="zigbang" width="120" height="21" loading="lazy">
+            </li>
+            <li class="journey-partner-logo">
+              <img src="assets/partner-onhouse.png" alt="ONHOUSE" width="140" height="30" loading="lazy">
+            </li>
+          </ul>
+        </div>
+
+        <div class="journey-cases" id="journey-cases">
+          <div class="journey-showcase" id="journey-showcase">
+            <article class="showcase-card showcase-card--popup reveal-item" id="showcase-popup-card">
+              <div class="showcase-card-visual" id="showcase-popup-visual">
+                <span class="showcase-card-visual-badge">인테리어</span>
+                <img src="assets/토스목업_메인팝업.png" alt="메인팝업 집행 사례" loading="lazy">
               </div>
               <div class="showcase-card-body">
                 <h3 class="showcase-card-title">메인팝업 <span class="showcase-card-arrow" aria-hidden="true">→</span></h3>
                 <p class="showcase-card-desc">앱 진입 시 노출되는 고임팩트 팝업 지면</p>
-                <span class="showcase-card-tag">인테리어</span>
+                <span class="showcase-card-tag">고효율 지면</span>
               </div>
             </article>
 
-            <article class="showcase-card showcase-card--banner reveal-item">
-              <div class="showcase-card-visual">
-                <img src="assets/인젠_메인배너.png" alt="인젠 메인배너 집행 사례" loading="lazy">
+            <article class="showcase-card showcase-card--banner reveal-item" id="showcase-banner-card">
+              <div class="showcase-card-visual" id="showcase-banner-visual">
+                <span class="showcase-card-visual-badge">시공사</span>
+                <img src="assets/토스목업_메인배너.png" alt="메인배너 집행 사례" loading="lazy">
               </div>
               <div class="showcase-card-body">
                 <h3 class="showcase-card-title">메인배너 <span class="showcase-card-arrow" aria-hidden="true">→</span></h3>
                 <p class="showcase-card-desc">메인 화면 하단에 상시 노출되는 배너 지면</p>
-                <span class="showcase-card-tag">인테리어</span>
+                <span class="showcase-card-tag">노출 보장</span>
+              </div>
+            </article>
+
+            <article class="showcase-card showcase-card--list-feed reveal-item" id="showcase-list-feed-card">
+              <div class="showcase-card-visual" id="showcase-list-feed-visual">
+                <span class="showcase-card-visual-badge">예비창업자</span>
+                <img src="assets/토스목업_리스트피드.png" alt="리스트 피드 광고 지면 예시" loading="lazy">
+              </div>
+              <div class="showcase-card-body">
+                <h3 class="showcase-card-title">리스트피드 <span class="showcase-card-arrow" aria-hidden="true">→</span></h3>
+                <p class="showcase-card-desc">탐색·비교 흐름 속 자연스러운 노출, 탐색을 방해하지 않는 광고</p>
+                <span class="showcase-card-tag">자연스러운 노출</span>
+              </div>
+            </article>
+
+            <article class="showcase-card showcase-card--endpoint reveal-item">
+              <div class="showcase-card-visual">
+                <span class="showcase-card-visual-badge">기창업자</span>
+                <img src="assets/토스목업_ 채널톡.png" alt="채널톡 광고 지면 예시" loading="lazy">
+              </div>
+              <div class="showcase-card-body">
+                <h3 class="showcase-card-title">채널톡 <span class="showcase-card-arrow" aria-hidden="true">→</span></h3>
+                <p class="showcase-card-desc">소상공인을 매물 조회, 찜, 임대인 기준으로 타게팅하여 캠페인 목적이 액션 기반이면 가장 효과가 좋은 광고</p>
+                <span class="showcase-card-tag">확실한 액션</span>
               </div>
             </article>
           </div>
@@ -205,12 +240,13 @@
 
     <section class="inquiry" id="inquiry" tabindex="-1">
       <div class="inquiry-inner">
-        <div class="inquiry-header">
-          <h2>문의하기</h2>
-          <p>필수 항목(<span class="required-mark">*</span>)을 입력하고 제출해 주세요.</p>
-        </div>
+        <div class="inquiry-form-panel" id="inquiryFormPanel">
+          <div class="inquiry-header">
+            <h2>문의하기</h2>
+            <p>필수 항목(<span class="required-mark">*</span>)을 입력하고 제출해 주세요.</p>
+          </div>
 
-        <form id="inquiryForm" class="inquiry-form" novalidate>
+          <form id="inquiryForm" class="inquiry-form" novalidate>
           <fieldset class="form-group">
             <legend>문의 주체 <span class="required-mark">*</span></legend>
             <div class="radio-group">
@@ -256,7 +292,7 @@
               >
               <span class="unit">만원</span>
             </div>
-            <p class="field-hint">집행 최소 금액 250만원 (숫자만 입력, 단위: 만원)</p>
+            <p class="field-hint">집행 최소 금액 200만원 (숫자만 입력, 단위: 만원)</p>
             <p class="field-error" data-error="budget"></p>
           </div>
 
@@ -295,6 +331,17 @@
               required
             >
             <p class="field-error" data-error="contactEmail"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="phoneInquiryTime">유선 문의시 가능한 시간대</label>
+            <input
+              type="text"
+              id="phoneInquiryTime"
+              name="phoneInquiryTime"
+              placeholder="예: 평일 10:00 ~ 18:00"
+            >
+            <p class="field-hint">전화 연락이 필요한 경우, 통화 가능한 시간을 적어 주세요.</p>
           </div>
 
           <div class="form-group">
@@ -352,6 +399,18 @@
 
           <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
         </form>
+        </div>
+
+        <div class="inquiry-success" id="inquirySuccess" hidden tabindex="-1" aria-live="polite" aria-hidden="true">
+          <div class="inquiry-success-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 12.5l2.5 2.5L16 9"/>
+            </svg>
+          </div>
+          <h3 class="inquiry-success-title">접수 완료!</h3>
+          <p class="inquiry-success-desc">1시간 이내로 연락드릴게요</p>
+        </div>
       </div>
     </section>
 
@@ -405,32 +464,26 @@
   <div class="sticky-bar" id="stickyBar">
     <div class="sticky-bar-inner">
       <div class="sticky-cta-wrap">
-        <span class="sticky-preparing-tooltip" id="stickyPreparingTooltip" role="status">준비중이에요</span>
+        <span class="soon-open-badge sticky-preparing-tooltip" id="stickyPreparingTooltip" role="status">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+          곧 오픈
+        </span>
         <a
-          href="https://www.nemoapp.kr/login"
+          href="campaign-create.html"
           class="sticky-card"
           id="stickyInquiryLink"
           aria-describedby="stickyPreparingTooltip"
-          target="_blank"
-          rel="noopener noreferrer"
         >광고 캠페인 직접 만들기</a>
       </div>
-
-      <a href="#" class="sticky-guide" id="stickyGuideLink" target="_blank" rel="noopener noreferrer">
-        <span class="sticky-guide-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18h6"/>
-            <path d="M10 22h4"/>
-            <path d="M12 2a7 7 0 0 0-4 12.74V17h8v-2.26A7 7 0 0 0 12 2z"/>
-          </svg>
-        </span>
-        <span>가이드</span>
-      </a>
     </div>
   </div>
 
   <script src="config.js"></script>
   <script src="hero-intro.js"></script>
-  <script src="script.js?v=2"></script>
+  <script src="inquiry-booking.js?v=2"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

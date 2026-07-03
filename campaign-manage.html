@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캠페인 관리 — 네모 광고</title>
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body class="manage-page">
+
+  <div class="manage-shell">
+
+    <!-- 사이드바 -->
+    <aside class="manage-sidebar">
+      <a href="account.html" class="manage-logo">
+        <img src="assets/nemo_logo_logo.png" alt="네모" width="28" height="28">
+        <span>네모 애즈 (광고주 센터)</span>
+      </a>
+      <nav class="manage-nav">
+        <!-- 1. 광고주 계정 관리 -->
+        <a href="ad-accounts.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          광고주 계정 관리
+        </a>
+        <!-- 1.1 계약 진행 (서브) -->
+        <a href="booking-manage.html" class="manage-nav-item manage-nav-item--sub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          계약 진행
+        </a>
+        <!-- 1.2 광고 제안서 자료실 (서브) -->
+        <a href="contract-manage.html" class="manage-nav-item manage-nav-item--sub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          광고 제안서 자료실
+        </a>
+        <!-- 2. 캠페인 관리 -->
+        <a href="campaign-manage.html" class="manage-nav-item is-active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          </svg>
+          캠페인 관리
+        </a>
+        <!-- 3. 정산 관리 -->
+        <a href="settlement-manage.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          정산 관리
+        </a>
+        <!-- 4. 성과 보고서 -->
+        <a href="report.html" class="manage-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          성과 보고서
+        </a>
+      </nav>
+    </aside>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="manage-main">
+
+      <!-- 상단 바 -->
+      <div class="manage-topbar">
+        <div class="manage-topbar-title">
+          <h1>캠페인 관리</h1>
+          <p class="manage-topbar-desc">광고 캠페인을 만들고 관리하세요.</p>
+        </div>
+        <div class="manage-topbar-actions">
+          <!-- 알림 벨 -->
+          <div class="notif-bell-wrap" id="notifBellWrap">
+            <button class="notif-bell-btn" id="notifBellBtn" aria-label="알림">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+              <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+            </button>
+            <!-- 알림 드롭다운 -->
+            <div class="notif-dropdown" id="notifDropdown" style="display:none">
+              <div class="notif-dropdown-header">
+                <span class="notif-dropdown-title">종료 임박 캠페인</span>
+                <span class="notif-dropdown-sub">7일 이내 종료</span>
+              </div>
+              <ul class="notif-list" id="notifList"></ul>
+              <div class="notif-empty" id="notifEmpty" style="display:none">
+                <p>임박한 종료 캠페인이 없습니다.</p>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="newCampaignBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            새 캠페인
+          </button>
+        </div>
+      </div>
+
+      <!-- 계정 필터 배너 (URL 파라미터로 진입 시 표시) -->
+      <div class="acct-filter-banner" id="acctFilterBanner" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <span id="acctFilterBannerText"></span>의 캠페인만 보고 있습니다.
+        <a href="campaign-manage.html" class="acct-filter-clear">전체 보기</a>
+      </div>
+
+      <!-- 유형 탭 -->
+      <div class="acct-type-tabs" id="campaignTypeTabs">
+        <button class="acct-type-tab is-active" data-type="">전체</button>
+        <button class="acct-type-tab" data-type="agency">
+          <span class="acct-type-dot acct-type-dot--agency"></span>광고대행사
+        </button>
+        <button class="acct-type-tab" data-type="partner">
+          <span class="acct-type-dot acct-type-dot--partner"></span>광고주
+        </button>
+      </div>
+
+      <!-- 요약 카드 -->
+      <div class="manage-stats" id="manageStats">
+        <div class="manage-stat-card">
+          <span class="manage-stat-label">전체</span>
+          <strong class="manage-stat-value" id="statTotal">0</strong>
+        </div>
+        <div class="manage-stat-card manage-stat-card--review">
+          <span class="manage-stat-label">예정</span>
+          <strong class="manage-stat-value" id="statScheduled">0</strong>
+        </div>
+        <div class="manage-stat-card manage-stat-card--active">
+          <span class="manage-stat-label">진행중</span>
+          <strong class="manage-stat-value" id="statActive">0</strong>
+        </div>
+        <div class="manage-stat-card manage-stat-card--ended">
+          <span class="manage-stat-label">종료</span>
+          <strong class="manage-stat-value" id="statEnded">0</strong>
+        </div>
+      </div>
+
+      <!-- 필터 툴바 -->
+      <div class="manage-toolbar">
+        <div class="manage-toolbar-filters">
+          <select class="manage-select" id="filterProduct">
+            <option value="">전체 상품</option>
+            <option value="main-popup">메인팝업</option>
+            <option value="main-banner">메인배너</option>
+            <option value="list-feed">리스트피드</option>
+            <option value="channel-talk">채널톡</option>
+            <option value="position-marker">포지션마커</option>
+            <option value="discovery">디스커버리</option>
+            <option value="endpoint">엔드포인트</option>
+            <option value="app-push">앱푸시</option>
+          </select>
+          <select class="manage-select" id="filterStatus">
+            <option value="">전체 상태</option>
+            <option value="scheduled">예정</option>
+            <option value="active">진행중</option>
+            <option value="ended">종료</option>
+          </select>
+        </div>
+        <div class="manage-search-wrap">
+          <svg class="manage-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="search" class="manage-search" id="searchInput" placeholder="캠페인명 검색" autocomplete="off">
+        </div>
+      </div>
+
+      <!-- 테이블 -->
+      <div class="manage-table-wrap">
+        <table class="manage-table" id="campaignTable">
+          <thead>
+            <tr>
+              <th>캠페인명</th>
+              <th>광고 계정</th>
+              <th>광고 상품</th>
+              <th>상태</th>
+              <th>노출 기간</th>
+              <th>등록일</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="campaignTbody">
+          </tbody>
+        </table>
+
+        <!-- 빈 상태 -->
+        <div class="manage-empty" id="manageEmpty" style="display:none">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <path d="M3 9h18M9 21V9"/>
+          </svg>
+          <p>캠페인이 없습니다.<br>첫 캠페인을 만들어 보세요.</p>
+          <button class="btn btn-primary" id="emptyNewBtn">+ 새 캠페인</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- 캠페인 생성/수정 모달 -->
+  <div class="manage-modal-overlay manage-modal-overlay--wide" id="campaignModalOverlay" style="display:none">
+    <div class="manage-modal manage-modal--wide" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+      <!-- 헤더 -->
+      <div class="manage-modal-header">
+        <h2 id="modalTitle">새 캠페인</h2>
+        <button class="manage-modal-close" id="modalCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- 2컬럼: 폼 + 미리보기 -->
+      <div class="manage-modal-cols">
+
+        <!-- 왼쪽: 폼 -->
+        <div class="manage-modal-form-col">
+          <form id="campaignForm" novalidate>
+            <input type="hidden" id="campaignId">
+
+            <!-- 광고 캠페인명 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="campaignName">광고 캠페인명</label>
+              <div class="manage-side-field">
+                <input type="text" id="campaignName" placeholder="배너 제목" maxlength="60" autocomplete="off">
+                <p class="manage-field-error" data-error="name"></p>
+              </div>
+            </div>
+
+            <!-- 설명 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="campaignDesc">
+                설명<br><span class="manage-label-opt">(선택)</span>
+              </label>
+              <div class="manage-side-field">
+                <textarea id="campaignDesc" placeholder="배너 설명" rows="3" maxlength="200"></textarea>
+              </div>
+            </div>
+
+            <!-- 광고 계정 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="campaignAccountId">광고 계정</label>
+              <div class="manage-side-field">
+                <select id="campaignAccountId">
+                  <option value="">계정 선택</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 배너 타입 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="campaignProduct">배너 타입</label>
+              <div class="manage-side-field">
+                <select id="campaignProduct">
+                  <option value="main-popup">메인 팝업</option>
+                  <option value="main-banner">메인 배너</option>
+                  <option value="list-feed">리스트피드</option>
+                  <option value="channel-talk">채널톡</option>
+                  <option value="position-marker">포지션마커</option>
+                  <option value="discovery">디스커버리</option>
+                  <option value="endpoint">엔드포인트</option>
+                  <option value="app-push">앱푸시</option>
+                </select>
+                <p class="manage-field-error" data-error="product"></p>
+              </div>
+            </div>
+
+            <!-- 상태 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="campaignStatus">상태</label>
+              <div class="manage-side-field">
+                <select id="campaignStatus">
+                  <option value="scheduled">예정</option>
+                  <option value="active">진행중</option>
+                  <option value="ended">종료</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 노출 기간 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label">노출 기간</label>
+              <div class="manage-side-field">
+                <div class="manage-date-range">
+                  <input type="datetime-local" id="campaignStart">
+                  <span class="manage-date-tilde">~</span>
+                  <input type="datetime-local" id="campaignEnd">
+                </div>
+                <p class="manage-field-error" data-error="start"></p>
+              </div>
+            </div>
+
+            <!-- 앱 이미지 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label">앱 이미지</label>
+              <div class="manage-side-field">
+                <div class="manage-dropzone" id="appImageZone" data-target="app">
+                  <input type="file" id="appImageInput" accept="image/png,image/jpeg,image/webp" hidden>
+                  <div class="manage-dropzone-empty" id="appImageEmpty">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span>클릭하여 이미지 업로드</span>
+                    <span class="manage-dropzone-hint">PNG, JPG, WEBP (최대 10MB)</span>
+                  </div>
+                  <img class="manage-dropzone-preview" id="appImagePreview" src="" alt="" hidden>
+                  <button type="button" class="manage-dropzone-remove" id="appImageRemove" hidden aria-label="이미지 삭제">×</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 웹 이미지 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label">웹 이미지</label>
+              <div class="manage-side-field">
+                <div class="manage-dropzone" id="webImageZone" data-target="web">
+                  <input type="file" id="webImageInput" accept="image/png,image/jpeg,image/webp" hidden>
+                  <div class="manage-dropzone-empty" id="webImageEmpty">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span>클릭하여 이미지 업로드</span>
+                    <span class="manage-dropzone-hint">PNG, JPG, WEBP (최대 10MB)</span>
+                  </div>
+                  <img class="manage-dropzone-preview" id="webImagePreview" src="" alt="" hidden>
+                  <button type="button" class="manage-dropzone-remove" id="webImageRemove" hidden aria-label="이미지 삭제">×</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 배경색 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label">배경색</label>
+              <div class="manage-side-field">
+                <div class="manage-color-section">
+                  <div class="manage-color-toggle" id="bgColorToggle">
+                    <button type="button" class="manage-color-toggle-btn is-active" data-mode="solid">단색</button>
+                    <button type="button" class="manage-color-toggle-btn" data-mode="gradient">그라데이션</button>
+                  </div>
+                  <div class="manage-color-row">
+                    <input type="color" id="bgColor1" value="#ffffff" class="manage-color-swatch">
+                    <input type="text" id="bgColor1Hex" value="#ffffff" class="manage-color-hex" maxlength="7">
+                    <span class="manage-color-sep" id="bgColor2Wrap" hidden>→</span>
+                    <input type="color" id="bgColor2" value="#eeeeee" class="manage-color-swatch" hidden>
+                    <input type="text" id="bgColor2Hex" value="#eeeeee" class="manage-color-hex" hidden maxlength="7">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA 버튼색 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label">CTA 버튼색</label>
+              <div class="manage-side-field">
+                <div class="manage-color-row">
+                  <input type="color" id="ctaColor" value="#000000" class="manage-color-swatch">
+                  <input type="text" id="ctaColorHex" value="#000000" class="manage-color-hex" maxlength="7">
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA 앱 버튼명 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="ctaLabel">
+                CTA 앱 버튼명<br><span class="manage-label-opt">(선택)</span>
+              </label>
+              <div class="manage-side-field">
+                <input type="text" id="ctaLabel" placeholder="버튼에 표시될 텍스트" maxlength="20">
+              </div>
+            </div>
+
+            <!-- CTA 링크 타입 -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="ctaLinkType">CTA 링크 타입</label>
+              <div class="manage-side-field">
+                <select id="ctaLinkType">
+                  <option value="external">외부 링크</option>
+                  <option value="internal">내부 링크</option>
+                  <option value="deeplink">딥링크</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- CTA URL -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="ctaUrl">CTA URL</label>
+              <div class="manage-side-field">
+                <input type="url" id="ctaUrl" placeholder="https://">
+              </div>
+            </div>
+
+            <!-- 트래킹 구분선 -->
+            <div class="manage-section-divider">트래킹</div>
+
+            <!-- 트래킹 ID -->
+            <div class="manage-form-row-label">
+              <label class="manage-side-label" for="trackingId">트래킹 ID</label>
+              <div class="manage-side-field">
+                <input type="text" id="trackingId" placeholder="앱 트래킹 식별자">
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- 오른쪽: 미리보기 -->
+        <div class="manage-modal-preview-col">
+          <div class="manage-preview-panel">
+            <div class="manage-preview-header">
+              <span class="manage-preview-title">미리보기</span>
+              <div class="manage-preview-toggle" id="previewToggle">
+                <button type="button" class="manage-preview-toggle-btn is-active" data-view="app">앱</button>
+                <button type="button" class="manage-preview-toggle-btn" data-view="web">웹</button>
+              </div>
+            </div>
+            <p class="manage-preview-size" id="previewSizeLabel">메인 팝업 앱 (392:260)</p>
+            <div class="manage-preview-box" id="previewBox">
+              <img id="previewImg" src="" alt="" hidden>
+              <span class="manage-preview-placeholder" id="previewPlaceholder">이미지를 업로드해주세요</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 푸터 -->
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="modalCancelBtn">취소</button>
+        <button class="btn btn-primary" id="modalSaveBtn">
+          <span class="btn-text">개발 서버에서 먼저 확인하기</span>
+          <span class="btn-loading" hidden>개발 서버 반영 중...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메일 미리보기 모달 -->
+  <div class="manage-modal-overlay" id="mailPreviewOverlay" style="display:none">
+    <div class="manage-modal manage-modal--mail" role="dialog" aria-modal="true" aria-labelledby="mailPreviewTitle">
+      <div class="manage-modal-header">
+        <h2 id="mailPreviewTitle">메일 미리보기</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-outline btn--sm" id="mailCopyBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            내용 복사
+          </button>
+          <a class="btn btn-primary btn--sm" id="mailtoLink" href="#" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            메일 열기
+          </a>
+          <button class="manage-modal-close" id="mailPreviewCloseBtn" aria-label="닫기">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="manage-modal-body mail-preview-body">
+        <div class="mail-preview-meta">
+          <div class="mail-preview-meta-row">
+            <span class="mail-preview-meta-label">받는 사람</span>
+            <span class="mail-preview-meta-value" id="mailTo">—</span>
+          </div>
+          <div class="mail-preview-meta-row">
+            <span class="mail-preview-meta-label">제목</span>
+            <span class="mail-preview-meta-value" id="mailSubject">—</span>
+          </div>
+        </div>
+        <div class="mail-preview-content" id="mailPreviewContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 삭제 확인 모달 -->
+  <div class="manage-modal-overlay" id="deleteModalOverlay" style="display:none">
+    <div class="manage-modal manage-modal--sm" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+      <div class="manage-modal-header">
+        <h2 id="deleteModalTitle">캠페인 삭제</h2>
+        <button class="manage-modal-close" id="deleteCloseBtn" aria-label="닫기">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="manage-modal-body">
+        <p class="manage-delete-desc">
+          <strong id="deleteCampaignName"></strong> 캠페인을 삭제하시겠습니까?<br>
+          <span>삭제 후 복구할 수 없습니다.</span>
+        </p>
+      </div>
+      <div class="manage-modal-footer">
+        <button class="btn btn-outline" id="deleteCancelBtn">취소</button>
+        <button class="btn manage-btn-delete" id="deleteConfirmBtn">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="auth.js?v=3"></script>
+  <script>requireAuth('manager');</script>
+  <script src="data/live-campaigns.js"></script>
+  <script src="ads-publish.js"></script>
+  <script src="campaign-manage.js"></script>
+</body>
+</html>
