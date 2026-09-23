@@ -1,12 +1,4 @@
-[README.md](https://github.com/user-attachments/files/32556820/README.md)
----
 
-## title: 광고주센터 소재 셋팅 운영 정책
-## audience: [광고주, 광고운영 매니저]
-## version: 0.1 (draft)
-## last_updated: 2026-09-23
-## owner: 광고운영매니저
-## status_values: [소재 검수중, 소재 검토 완료, 소재 검토 반려, 캠페인 진행 중, 캠페인 종료]
 ---
 
 ## 1. 개요
